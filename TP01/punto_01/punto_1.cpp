@@ -1,43 +1,45 @@
 #include <iostream>
 
 class Orden {
-public:
-    void Ordenar(int arr[], int n);
-    virtual bool Comparacion(int a, int b) = 0;
+	public:
+		void ordenar(int arr[], int n);
+		virtual bool comparacion(int a, int b) = 0;
 };
 
-class OrdenAscendente : public Ordenar {
-public:
-    bool Comparacion(int a, int b) override;
-};
-### metodo plantilla 
-void OrdenAscendente::ordenar(int arr[], int n) {
+void Orden::ordenar(int arr[], int n) {
     for (int i = 0; i < n - 1; i++) {
         for (int j = 0; j < n - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
+            if (comparacion(arr[j], arr[j + 1])) {
 				int aux = arr[j];
                 arr[j] = arr[j + 1];
                 arr[j + 1] = aux;
-			}
-		}
-	}
-}
-
-class OrdenDescendente : public Ordenar {
-public:
-    bool Comparacion(int a, int b) override;
+			};
+		};
+	};
 };
 
-void OrdenDescendente::ordenar(int arr[], int n) {
-    
-}
+class OrdenAscendente : public Orden {
+	public:
+		bool comparacion(int a, int b) override{
+			return a > b;
+		};
+};
+
+
+class OrdenDescendente : public Orden {
+	public:
+		bool comparacion(int a, int b) override{
+			return a < b;
+		};
+};
+
 
 class Cliente {
 private:
-    Ordenar* orden;
+    Orden* orden;
 
 public:
-    void setOrdenar(Ordenar* o) {
+    void setOrdenar(Orden* o) {
         orden = o;
     }
 
@@ -46,8 +48,26 @@ public:
     }
 };
 
+void escribir(int arr[], int n){
+	for (int i = 0; i < n; i++) {
+		std::cout << arr[i] << " ";
+	};
+	std::cout << std::endl;
+};
+
 int main(){
-	std::cout << "Hola" << std::endl;
+	Cliente cliente;
+	OrdenAscendente asc;
+	OrdenDescendente dsc;
+	int arreglo[] = {1,5,3,10,95};
+	
+	escribir(arreglo, 5);
+	cliente.setOrdenar(&asc);
+	cliente.ordenarArreglo(arreglo, 5 );
+	cliente.setOrdenar(&dsc);
+	cliente.ordenarArreglo(arreglo, 5);
+	escribir(arreglo, 5);
+	
 	return 0;
-	}
+;}
 	

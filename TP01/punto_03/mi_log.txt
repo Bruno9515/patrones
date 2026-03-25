@@ -1,8 +1,4 @@
-Tue Mar 24 23:03:42 2026
- [INFO] Inicio del sistema
-Tue Mar 24 23:03:42 2026
- [ERROR] Fallo en login
-Tue Mar 24 23:36:13 2026
- [INFO] Inicio del sistema
-Tue Mar 24 23:36:13 2026
- [ERROR] Fallo en login
+Wed Mar 25 10:11:44 2026
+ [INFO] Programa iniciado
+Wed Mar 25 10:11:44 2026
+ [ERROR] Algo salió mal

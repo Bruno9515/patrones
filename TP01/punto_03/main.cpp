@@ -1,19 +1,16 @@
 #include "biblioteca.h"
 
-LogManager* LogManager::instancia = nullptr;
-
-
 int main() {
-    LogManager* log1 = LogManager::getInstance("mi_log.txt");
-    LogManager* log2 = LogManager::getInstance();
+    LogManager& logger = LogManager::getInstance("mi_log.txt");
+	LogManager& logger2 = LogManager::getInstance();
 
-    log1->log("INFO", "Inicio del sistema");
-    log2->log("ERROR", "Fallo en login");
+    logger.log("INFO", "Programa iniciado");
+    logger2.log("ERROR", "Algo salió mal");
 
     // comprobar que es la misma instancia
-    if (log1 == log2) {
+    if (&logger == &logger2) {
         std::cout << "Es la misma instancia\n";
-    }
+    };
 
     return 0;
-}
+};

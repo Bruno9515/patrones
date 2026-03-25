@@ -4,33 +4,33 @@
 
 
 class LogManager {
-private:
-    static LogManager* instancia;
-    std::string ruta;
+	private:
+		LogManager(){};
+		std::string ruta;
 
-    LogManager(std::string rutaArchivo) {
-        ruta = rutaArchivo;
-    }
+		LogManager(std::string rutaArchivo) {
+			ruta = rutaArchivo;
+		};
+			
+		LogManager(const LogManager&) = delete;
+		LogManager& operator=(const LogManager&) = delete;
 
-public:
-    LogManager(const LogManager&) = delete;
-    LogManager& operator=(const LogManager&) = delete;
 
-    static LogManager* getInstance(std::string rutaArchivo = "log.txt") {
-        if (instancia == nullptr) {
-            instancia = new LogManager(rutaArchivo);
-        }
-        return instancia;
-    }
+	public:
 
-    void log(std::string tipo, std::string mensaje) {
-        std::ofstream archivo(ruta, std::ios::app);
+		static LogManager& getInstance(std::string rutaArchivo = "log.txt") {
+			static LogManager instancia(rutaArchivo);
+			return instancia;
+		};
 
-        std::time_t ahora = time(0);
-        std::string fecha = ctime(&ahora);
+		void log(std::string tipo, std::string mensaje) {
+			std::ofstream archivo(ruta, std::ios::app);
 
-        archivo << fecha << " [" << tipo << "] " << mensaje << std::endl;
+			std::time_t ahora = time(0);
+			std::string fecha = ctime(&ahora);
 
-        archivo.close();
-    }
+			archivo << fecha << " [" << tipo << "] " << mensaje << std::endl;
+
+			archivo.close();
+		};
 };

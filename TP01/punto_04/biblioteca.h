@@ -12,3 +12,6 @@ La aplicación debe permitir manipular canciones y listas de reproducción de ma
 uniforme.
 a. Diseñe un Diagrama de Clases del problema.
 b. Implemente la solución planteada.*/
+#include <iostream>
+
+

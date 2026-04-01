@@ -1,0 +1,76 @@
+codigo plantuml
+@startuml
+
+abstract class Orden {
+    +ordenar(arr: int[], n: int): void
+    +comparacion(a: int, b: int): bool
+}
+
+class OrdenAscendente {
+    +comparacion(a: int, b: int): bool
+}
+
+class OrdenDescendente {
+    +comparacion(a: int, b: int): bool
+}
+
+class Cliente {
+    -orden: Orden*
+    +setOrdenar(o: Orden*): void
+    +ordenarArreglo(arr: int[], n: int): void
+}
+
+OrdenAscendente --|> Orden
+OrdenDescendente --|> Orden
+Cliente --> Orden
+
+@enduml
+
+
+
+CLASE ABSTRACTA Orden
+    METODO ordenar(arr, n)
+        PARA i DESDE 0 HASTA n-2 HACER
+            PARA j DESDE 0 HASTA n-i-2 HACER
+                SI comparacion(arr[j], arr[j+1]) ENTONCES
+                    aux ← arr[j]
+                    arr[j] ← arr[j+1]
+                    arr[j+1] ← aux
+                FIN SI
+            FIN PARA
+        FIN PARA
+    FIN METODO
+
+    METODO ABSTRACTO comparacion(a, b)
+FIN CLASE
+
+CLASE OrdenAscendente HEREDA Orden
+    METODO comparacion(a, b)
+        RETORNAR a > b
+    FIN METODO
+FIN CLASE
+
+CLASE OrdenDescendente HEREDA Orden
+    METODO comparacion(a, b)
+        RETORNAR a < b
+    FIN METODO
+FIN CLASE
+
+CLASE Cliente
+    ATRIBUTO orden
+
+    METODO setOrdenar(o)
+        orden ← o
+    FIN METODO
+
+    METODO ordenarArreglo(arr, n)
+        orden.ordenar(arr, n)
+    FIN METODO
+FIN CLASE
+
+FUNCION escribir(arr, n)
+    PARA i DESDE 0 HASTA n-1 HACER
+        IMPRIMIR arr[i]
+    FIN PARA
+    IMPRIMIR salto de línea
+FIN FUNCION

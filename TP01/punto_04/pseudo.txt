@@ -1,0 +1,129 @@
+@startuml
+
+abstract class ElementoMusical {
+    - nombre
+    + reproducir()
+    + getDuracion()
+    + renombrar(nuevoNombre)
+    + mostrarInfo()
+}
+
+class Cancion {
+    - artista
+    - duracion
+    + reproducir()
+    + getDuracion()
+    + mostrarInfo()
+}
+
+class ListaReproduccion {
+    - elementos
+    + agregar(elem)
+    + quitar(elem)
+    + reproducir()
+    + getDuracion()
+    + mostrarInfo()
+}
+
+ElementoMusical <|-- Cancion
+ElementoMusical <|-- ListaReproduccion
+ListaReproduccion --> ElementoMusical : contiene
+
+@enduml
+
+CLASE ElementoMusical
+    ATRIBUTO:
+        nombre
+
+    METODO ABSTRACTO reproducir()
+    METODO ABSTRACTO getDuracion()
+    METODO ABSTRACTO mostrarInfo()
+
+    METODO renombrar(nuevoNombre)
+        nombre ← nuevoNombre
+FIN CLASE
+
+CLASE Cancion HEREDA ElementoMusical
+    ATRIBUTOS:
+        artista
+        duracion
+
+    CONSTRUCTOR(nombre, artista, duracion)
+        asignar valores
+
+    METODO reproducir()
+        imprimir "Reproduciendo canción: " + nombre
+
+    METODO getDuracion()
+        retornar duracion
+
+    METODO mostrarInfo()
+        imprimir "Canción: " + nombre + " - " + artista + " (" + duracion + " seg)"
+FIN CLASE
+
+CLASE ListaReproduccion HEREDA ElementoMusical
+    ATRIBUTO:
+        elementos ← lista vacía
+
+    CONSTRUCTOR(nombre)
+        asignar nombre
+
+    METODO agregar(elemento)
+        agregar elemento a elementos
+
+    METODO quitar(elemento)
+        eliminar elemento de elementos
+
+    METODO reproducir()
+        imprimir "Reproduciendo lista: " + nombre
+        PARA CADA e EN elementos HACER
+            e.reproducir()
+        FIN PARA
+
+    METODO getDuracion()
+        total ← 0
+        PARA CADA e EN elementos HACER
+            total ← total + e.getDuracion()
+        FIN PARA
+        retornar total
+
+    METODO mostrarInfo()
+        imprimir "Lista: " + nombre + " | Duración total: " + getDuracion() + " seg"
+        PARA CADA e EN elementos HACER
+            e.mostrarInfo()
+        FIN PARA
+FIN CLASE
+
+CLASE ListaReproduccion HEREDA ElementoMusical
+    ATRIBUTO:
+        elementos ← lista vacía
+
+    CONSTRUCTOR(nombre)
+        asignar nombre
+
+    METODO agregar(elemento)
+        agregar elemento a elementos
+
+    METODO quitar(elemento)
+        eliminar elemento de elementos
+
+    METODO reproducir()
+        imprimir "Reproduciendo lista: " + nombre
+        PARA CADA e EN elementos HACER
+            e.reproducir()
+        FIN PARA
+
+    METODO getDuracion()
+        total ← 0
+        PARA CADA e EN elementos HACER
+            total ← total + e.getDuracion()
+        FIN PARA
+        retornar total
+
+    METODO mostrarInfo()
+        imprimir "Lista: " + nombre + " | Duración total: " + getDuracion() + " seg"
+        PARA CADA e EN elementos HACER
+            e.mostrarInfo()
+        FIN PARA
+FIN CLASE
+

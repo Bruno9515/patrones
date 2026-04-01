@@ -1,0 +1,177 @@
+@startuml
+
+class Producto {
+    - nombre: string
+    - precio: double
+    - supervision: bool
+    + getNombre(): string
+    + getPrecio(): double
+    + getSupervision(): bool
+    + mostrarInformacion(): void
+}
+
+abstract class Estado {
+    + escanearProducto(c: Caja, p: Producto): void
+    + abonarCompra(c: Caja): void
+    + finalizarCompra(c: Caja): void
+}
+
+class EsperandoClientes
+class EscaneandoProductos
+class ProcesarPagos
+class RequiereSupervision {
+    + validando(c: Caja, p: Producto, codigo: int): void
+}
+
+class Caja {
+    - estado: Estado
+    - productoPendiente: Producto
+    - productos: vector<Producto>
+    - total: double
+
+    + setEstado(e: Estado): void
+    + escanearProducto(p: Producto): void
+    + abonarCompra(): void
+    + finalizarCompra(): void
+    + agregarProducto(p: Producto): void
+    + validarSupervisor(codigo: int): void
+}
+
+Estado <|-- EsperandoClientes
+Estado <|-- EscaneandoProductos
+Estado <|-- ProcesarPagos
+Estado <|-- RequiereSupervision
+
+Caja --> Estado
+Caja --> Producto
+
+@enduml
+
+
+
+CLASE Producto
+    ATRIBUTOS: nombre, precio, supervision
+
+    METODO getNombre → retornar nombre
+    METODO getPrecio → retornar precio
+    METODO getSupervision → retornar supervision
+
+    METODO mostrarInformacion
+        imprimir nombre y precio
+FIN CLASE
+
+CLASE ABSTRACTA Estado
+    METODO escanearProducto(caja, producto)
+    METODO abonarCompra(caja)
+    METODO finalizarCompra(caja)
+FIN CLASE
+
+CLASE EsperandoClientes HEREDA Estado
+
+    METODO escanearProducto(caja, producto)
+        imprimir "Escaneando primer producto"
+
+        SI producto requiere supervision ENTONCES
+            caja.estado ← Supervisando
+            caja.productoPendiente ← producto
+        SINO
+            caja.estado ← Escaneando
+            caja.agregarProducto(producto)
+        FIN SI
+
+    METODO abonarCompra
+        imprimir "No hay compra en proceso"
+
+    METODO finalizarCompra
+        imprimir "No hay compra en proceso"
+
+FIN CLASE
+
+CLASE EscaneandoProductos HEREDA Estado
+
+    METODO escanearProducto(caja, producto)
+        SI requiere supervision ENTONCES
+            caja.estado ← Supervisando
+            caja.productoPendiente ← producto
+        SINO
+            caja.agregarProducto(producto)
+            imprimir "Producto escaneado"
+        FIN SI
+
+    METODO abonarCompra
+        imprimir total
+        caja.estado ← Pagando
+
+    METODO finalizarCompra
+        imprimir "Compra cancelada"
+        caja.reiniciar()
+        caja.estado ← Esperando
+
+FIN CLASE
+
+CLASE ProcesarPagos HEREDA Estado
+
+    METODO escanearProducto
+        imprimir "En proceso de pago"
+
+    METODO abonarCompra
+        imprimir "En proceso de pago"
+
+    METODO finalizarCompra
+        imprimir "Compra finalizada"
+        caja.reiniciar()
+        caja.estado ← Esperando
+
+FIN CLASE
+
+CLASE RequiereSupervision HEREDA Estado
+
+    METODO escanearProducto
+        imprimir "Esperando supervisor"
+
+    METODO abonarCompra
+        imprimir "No se puede pagar"
+
+    METODO finalizarCompra
+        imprimir "Compra cancelada"
+        caja.reiniciar()
+        caja.estado ← Esperando
+
+    METODO validando(caja, producto, codigo)
+        imprimir "Validando"
+        caja.validarSupervisor(codigo)
+
+FIN CLASE
+
+CLASE Caja
+    ATRIBUTOS:
+        estado
+        productoPendiente
+        productos
+        total
+
+    METODO escanearProducto(producto)
+        estado.escanearProducto(this, producto)
+
+    METODO agregarProducto(producto)
+        agregar a lista
+        total += precio
+
+    METODO validarSupervisor(codigo)
+        SI codigo == 1234 ENTONCES
+            imprimir "Supervisor validado"
+            estado ← Escaneando
+            agregar productoPendiente
+        SINO
+            imprimir "Codigo incorrecto"
+        FIN SI
+
+    METODO abonarCompra
+        estado.abonarCompra(this)
+
+    METODO finalizarCompra
+        estado.finalizarCompra(this)
+
+FIN CLASE
+
+

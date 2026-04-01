@@ -1,5 +1,5 @@
 #include <iostream>
-#include <fstream> // Para manipular archivos
+#include <fstream> 
 #include <ctime>
 
 

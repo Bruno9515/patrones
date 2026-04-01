@@ -1,0 +1,63 @@
+@startuml
+
+class LogManager {
+    - ruta: string
+    - LogManager()
+    - LogManager(rutaArchivo: string)
+    - LogManager(const LogManager&)
+    - operator=(const LogManager&)
+
+    + getInstance(rutaArchivo: string = "log.txt"): LogManager
+    + log(tipo: string, mensaje: string): void
+}
+
+note right of LogManager
+Singleton:
+- Constructor privado
+- Instancia única (static)
+- Acceso global
+end note
+
+@enduml
+
+CLASE LogManager
+
+    ATRIBUTO PRIVADO:
+        ruta
+
+    ATRIBUTO ESTATICO PRIVADO:
+        instancia
+
+    CONSTRUCTOR PRIVADO(rutaArchivo)
+        ruta ← rutaArchivo
+    FIN CONSTRUCTOR
+
+    METODO ESTATICO getInstance(rutaArchivo)
+
+        SI instancia NO EXISTE ENTONCES
+            SI rutaArchivo NO FUE PROPORCIONADO ENTONCES
+                rutaArchivo ← "log.txt"
+            FIN SI
+
+            instancia ← NUEVO LogManager(rutaArchivo)
+        FIN SI
+
+        RETORNAR instancia
+
+    FIN METODO
+
+    METODO log(tipo, mensaje)
+
+        ABRIR archivo en modo agregar usando ruta
+
+        fecha ← OBTENER fecha y hora actual
+
+        ESCRIBIR en archivo:
+            fecha + " [" + tipo + "] " + mensaje
+
+        CERRAR archivo
+
+    FIN METODO
+
+FIN CLASE
+

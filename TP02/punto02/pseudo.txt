@@ -1,0 +1,20 @@
+Solicitud
+ValidarIdentidad
+VerificarRequisitos
+GenerarCertificado
+RegistrarFolio
+EntregarCertificado
+
+certifiado de residencia fiscal
+codigo unico
+dni nombre ompleto
+residencia
+pais destino
+periodovalidadez Certificado
+
+certificado de domicilio(comprobada su residencia)
+codigo unico
+dni nombre ompleto
+domicilio
+
+diagrama
